@@ -10,7 +10,7 @@ let currentQtnNo = 0;
 let isSaveNextStatus = true;
 let timerInterval;
 let maxQuestions=15;
-let duration =30;
+let duration =100;
 let reviewProcess = false;
 
 //Window.startTimer=startTimer;
@@ -33,6 +33,44 @@ function startQuiz1(){
         .catch(error => console.logerror());
         
 };
+
+// Assuming you have a container element in your HTML where buttons will be appended
+const container = document.getElementById('allbtns');
+let btnname="";
+// Function to be called when a button is clicked
+function buttonClickHandler(event) {
+     btnname= event.target.id;
+   // alert(`Button ${event.target.id} clicked!`);
+    setQuestionById(btnname,selectedOptions[btnname]);
+}
+
+// Loop to create buttons
+for (let i = 1; i <= maxQuestions; i++) {
+    // Create a button element
+    const button = document.createElement('button');
+    
+    // Set button attributes (optional)
+    button.setAttribute('id', `${i}`);
+    button.textContent = `${i}`;
+
+    button.style.padding = '10px 20px';
+    button.style.margin = '5px';
+    button.style.backgroundColor = 'grey';
+    button.style.color = 'black';
+    button.style.border = 'none';
+    button.style.cursor = 'pointer';
+    button.style.width ='55px';
+    
+    // Assign click event handler
+    button.addEventListener('click', buttonClickHandler);
+    
+    // Append the button to the container
+    container.appendChild(button);
+}
+
+
+
+
 
 
 const questionElement = document.getElementById("question");
@@ -70,15 +108,19 @@ document.getElementById("submit-btn").onclick = setAnalysisData;
 document.getElementById("anxt-btn").onclick = setAnalysisNextQuestion;
 
 function examSummaryReport(){
-  let resStr="";
   let notAttempterd="";
   notAttempterd= maxQuestions -(CorrectdCount+Wrongount);
-  resStr="EXAM COMPLETED"+
-          "\n Total Exam Questions  : "+maxQuestions+
-          "\n Correct Answred       : "+CorrectdCount+
-          "\n Wrong Answred         : "+Wrongount+
-          "\n Not Attempted         : "+notAttempterd;
-  alert(resStr);
+ 
+ const resbtn1=document.getElementById("res-status1");
+ resbtn1.style.display='inline';
+ resbtn1.innerHTML="TOTAL   QUESTIONS  : "+maxQuestions+"<br>"+"<br>"+"NOT ATTEMPTED : "+notAttempterd;
+ 
+ 
+ const resbtn2=document.getElementById("res-status2");
+ resbtn2.style.display='inline';
+ resbtn2.innerHTML="CORRECT : " +CorrectdCount+"<br>"+"<br>"+"WRONG : "+Wrongount;
+ 
+
 }
 
 function setButtonColorsAfterExam(){
@@ -97,9 +139,12 @@ function setButtonColorsAfterExam(){
       {
         crtbtn.style.background='green';
       }
+      else if(selectedOptions[currentQuestionIndex+1]>0){
+        crtbtn.style.background='red';
+      }
       else
       {
-        crtbtn.style.background='red';
+        crtbtn.style.background='grey';
       }
       currentQuestionIndex=currentQuestionIndex+1;
    }
@@ -151,9 +196,12 @@ function setAnalysisNextQuestion ()
   {
     ansbtn.style.background='green';
   }
+  else if(selectedOptions[currentQuestionIndex+1]>0){
+    ansbtn.style.background='red';
+  }
   else
   {
-    ansbtn.style.background='red';
+    ansbtn.style.background='grey';
   }
 
   const form=document.getElementById('radio-btns');
@@ -204,6 +252,9 @@ function setAnalysisData(){
   if(selectedOptions[currentQuestionIndex+1]==loadedData[currentQuestionIndex].qans)
   {
     ansbtn.style.background='green';
+  }
+  else if(selectedOptions[currentQuestionIndex+1]>0){
+    ansbtn.style.background='red';
   }
   else
   {
