@@ -108,6 +108,19 @@
     display: none;
 }
 
+#download-pdf{
+    background: #001e4d;
+    color: #fff;
+    font-weight: 500;
+    width: 250px;
+    border: 0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none;
+}
+
 #ans-btn,#anxt-btn,#submit-btn{
     background: #001e4d;
     color: #fff;

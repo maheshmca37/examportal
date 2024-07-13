@@ -126,6 +126,57 @@ document.getElementById("Review-btn").onclick = setReviewStatus;
 document.getElementById("onxt-btn").onclick = setOnlyNextQuestion;
 document.getElementById("submit-btn").onclick = setAnalysisData;
 document.getElementById("anxt-btn").onclick = setAnalysisNextQuestion;
+//document.getElementById("download-pdf").onclick = setDataForDownlaod;
+
+
+document.getElementById("download-pdf").addEventListener("click", function(event) {
+    event.preventDefault(); // Prevent the default form submission or link behavior
+    const content = [];
+    
+    
+    const sname =   "Name : "+studentName; 
+    const exname =   "Exam  : "+examName; 
+    const tmarks = "Total Questions :"+maxQuestions;
+    let noatt = maxQuestions-(CorrectdCount+WrongCount);
+    const notattempt = "Not Attempted : "+noatt;
+    const resmarks ="Correct : "+CorrectdCount;
+    const wrmarks = "Wrong : "+WrongCount;
+     
+    
+    content.push({ text: exname, fontSize: 16, bold: true });
+    content.push({ text: sname, fontSize: 16, bold: true });
+    content.push({ text: tmarks, fontSize: 16, bold: true });
+    content.push({ text: notattempt, fontSize: 16, bold: true });
+    content.push({ text: resmarks, fontSize: 16, bold: true });
+    content.push({ text: wrmarks, fontSize: 16, bold: true });
+
+    content.push({ text: '', margin: [0, 15] });
+
+
+    loadedData.forEach((q,index) => {
+      content.push({ text: `Q${q.qid}. ${q.qname}`, fontSize: 13 });
+      
+      content.push({ text: `1. ${q.qopt1}`, fontSize: 12 });
+      content.push({ text: `2. ${q.qopt2}`, fontSize: 12 });
+      content.push({ text: `3. ${q.qopt3}`, fontSize: 12 });
+      content.push({ text: `4. ${q.qopt4}`, fontSize: 12 });
+
+      // Add user selection after options
+        const userSelection = selectedOptions[index+1]; // Get the user selection for the current question
+        content.push({ text: `Your: Option ${userSelection}`, fontSize: 12 });
+        
+
+      content.push({ text: `Answer: Option ${q.qans}`, fontSize: 12 });
+      content.push({ text: `Hint: ${q.qhint}`, fontSize: 12 });
+      content.push({ text: '', margin: [0, 10] }); // Adds a space between questions
+    });
+
+    const docDefinition = { 
+      content: content
+    };
+
+    pdfMake.createPdf(docDefinition).download('result.pdf');
+  });
 
 function examSummaryReport(){
   let notAttempterd="";
@@ -140,6 +191,11 @@ function examSummaryReport(){
  resbtn2.style.display='inline';
  resbtn2.innerHTML="CORRECT : " +CorrectdCount+"<br>"+"<br>"+"WRONG : "+WrongCount;
  
+  
+  const pdfbtn=document.getElementById("download-pdf");
+  pdfbtn.style.display='inline';
+  
+
 
  // to save the details in data base... enaable this call
  //setExamResultToDatabase();
@@ -190,7 +246,7 @@ function setButtonColorsAfterExam(){
    currentQuestionIndex=0;
    CorrectdCount=0;
    WrongCount=0;
-   for(let i=1; i<maxQuestions;i++){
+   for(let i=1; i<=maxQuestions;i++){
      loopvar=i;
      const crtbtn=document.getElementById(loopvar);
     if(selectedOptions[currentQuestionIndex+1]==loadedData[currentQuestionIndex].qans)
