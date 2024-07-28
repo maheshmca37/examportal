@@ -1,7 +1,7 @@
 //const listE1 = document.querySelector('ul');
 
-let duration = 1800;
-let maxQuestions=40;
+let duration = 600;
+let maxQuestions=10;
 
 let currentQuestionIndex = 0;
 let loadedData = '';
@@ -162,9 +162,9 @@ document.getElementById("anxt-btn").onclick = setAnalysisNextQuestion;
 
 // Enable and Disable For Telugu and English languages
 
-  document.getElementById("change-lang").onclick = setLanguage;
-// const langSel = document.getElementById("change-lang");
-// langSel.style.display= 'none';
+ // document.getElementById("change-lang").onclick = setLanguage;
+ const langSel = document.getElementById("change-lang");
+ langSel.style.display= 'none';
 //document.getElementById("download-pdf").onclick = setDataForDownlaod;
 
 function setLanguage(){
