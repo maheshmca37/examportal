@@ -36,7 +36,7 @@
     padding-bottom: 30px;
 }
 .quiz h2{
-    font-size: 18px;
+    font-size: 22px;
     color: #0f077e;
     font-weight: 300;
     margin-left: 20px;
@@ -44,6 +44,7 @@
 
 #opt1,#opt2,#opt3,#opt4{
     margin-left: 20px;
+    font-size: 18px;
 }
 
 
@@ -95,16 +96,15 @@
     display: none;
 }
 
-#hint-btn{
-    background: #001e4d;
-    color: #fff;
-    font-weight: 500;
-    width: 500px;
-    border: 0;
+#hintTextArea{
+    width: 300px;
+    height: 100px;
     padding: 10px;
-    margin: 20px auto 0;
-    border-radius: 4px;
-    cursor: pointer;
+    font-family: Arial;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     display: none;
 }
 
@@ -120,6 +120,19 @@
     cursor: pointer;
     display: none;
 }
+
+#change-lang{
+    background: #001e4d;
+    color: #fff;
+    font-weight: 500;
+    width: 70px;
+    border: 0;
+    padding: 10px;
+    margin: 20px  0 0 100px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 
 #ans-btn,#anxt-btn,#submit-btn{
     background: #001e4d;

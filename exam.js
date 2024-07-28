@@ -1,9 +1,11 @@
-const listE1 = document.querySelector('ul');
+//const listE1 = document.querySelector('ul');
 
-let duration = 100;
+let duration = 1800;
+let maxQuestions=40;
 
 let currentQuestionIndex = 0;
 let loadedData = '';
+let loadedLang2Data = '';
 let CorrectdCount = 0;
 let WrongCount = 0;
 let selectedOptions = [];
@@ -11,11 +13,12 @@ var radios = document.getElementsByName('option');
 let currentQtnNo = 0;
 let isSaveNextStatus = true;
 let timerInterval;
-let maxQuestions=15;
+
 
 let examName='Exam';
 let studentName='mahesh';
 let reviewProcess = false;
+let selectedLanguage = 1;
 
 
 //
@@ -37,8 +40,8 @@ fetch('user.json')
 }
 
 
-startQuiz1();
-function startQuiz1(){
+loadExamDataLang1();
+function loadExamDataLang1(){
 
      fetch('./loadj.json')
        .then(res => {
@@ -48,11 +51,30 @@ function startQuiz1(){
         data.forEach(user => {
             loadedData = data;
              
-        }); startQuiz(loadedData);
+        }); startExam(loadedData);
        })
         .catch(error => console.logerror());
         
 };
+
+
+loadExamDataLang2();
+function loadExamDataLang2(){
+
+     fetch('./loadtel.json')
+       .then(res => {
+          return res.json();
+       })
+       .then(data1  => {
+        data1.forEach(user => {
+            loadedLang2Data = data1;
+             
+        }); 
+       })
+        .catch(error => console.logerror());
+        
+};
+
 
 // Assuming you have a container element in your HTML where buttons will be appended
 const container = document.getElementById('allbtns');
@@ -96,25 +118,35 @@ for (let i = 1; i <= maxQuestions; i++) {
 const questionElement = document.getElementById("question");
 const nxtButton = document.getElementById("next-btn");
 
-function startQuiz(loadedData){
+//const changeLang = document.getElementById("change-lang");
+
+
+function startExam(loadedData){
     showQuestion();
 }
 
 function showQuestion() {
 
+  if(selectedLanguage == 1){
+
     currentQtnNo = loadedData[currentQuestionIndex].qid;
     questionElement.innerHTML = currentQtnNo + ".  " +loadedData[currentQuestionIndex].qname;
-    
-    const optio1 = document.getElementById("opt1");
-    const optio2 = document.getElementById("opt2");
-    const optio3 = document.getElementById("opt3");
-    const optio4 = document.getElementById("opt4");
    
     document.getElementById("opt1").nextElementSibling.textContent="(1)"+loadedData[currentQuestionIndex].qopt1;
     document.getElementById("opt2").nextElementSibling.textContent="(2)"+loadedData[currentQuestionIndex].qopt2;
     document.getElementById("opt3").nextElementSibling.textContent="(3)"+loadedData[currentQuestionIndex].qopt3;
     document.getElementById("opt4").nextElementSibling.textContent="(4)"+loadedData[currentQuestionIndex].qopt4;
-
+  }
+  if(selectedLanguage == 2){
+    currentQtnNo = loadedLang2Data[currentQuestionIndex].qid;
+    questionElement.innerHTML = currentQtnNo + ".  " +loadedLang2Data[currentQuestionIndex].qname;
+   
+    document.getElementById("opt1").nextElementSibling.textContent="(1)"+loadedLang2Data[currentQuestionIndex].qopt1;
+    document.getElementById("opt2").nextElementSibling.textContent="(2)"+loadedLang2Data[currentQuestionIndex].qopt2;
+    document.getElementById("opt3").nextElementSibling.textContent="(3)"+loadedLang2Data[currentQuestionIndex].qopt3;
+    document.getElementById("opt4").nextElementSibling.textContent="(4)"+loadedLang2Data[currentQuestionIndex].qopt4;
+    
+  }
    
     const nextBtn = document.getElementById("next-btn");
     nextBtn.innerHTML = "Save and Next";
@@ -126,7 +158,29 @@ document.getElementById("Review-btn").onclick = setReviewStatus;
 document.getElementById("onxt-btn").onclick = setOnlyNextQuestion;
 document.getElementById("submit-btn").onclick = setAnalysisData;
 document.getElementById("anxt-btn").onclick = setAnalysisNextQuestion;
+
+
+// Enable and Disable For Telugu and English languages
+
+  document.getElementById("change-lang").onclick = setLanguage;
+// const langSel = document.getElementById("change-lang");
+// langSel.style.display= 'none';
 //document.getElementById("download-pdf").onclick = setDataForDownlaod;
+
+function setLanguage(){
+
+  const langbtn = document.getElementById("change-lang");
+  if(langbtn.innerHTML=='TELUGU') {
+    selectedLanguage = 2;
+    langbtn.innerHTML= "ENGLISH";
+  }
+  else {
+    selectedLanguage = 1;
+    langbtn.innerHTML= "TELUGU";
+  }
+
+  showQuestion();
+}
 
 
 document.getElementById("download-pdf").addEventListener("click", function(event) {
@@ -166,8 +220,8 @@ document.getElementById("download-pdf").addEventListener("click", function(event
         content.push({ text: `Your: Option ${userSelection}`, fontSize: 12 });
         
 
-      content.push({ text: `Answer: Option ${q.qans}`, fontSize: 12 });
-      content.push({ text: `Hint: ${q.qhint}`, fontSize: 12 });
+      content.push({ text: `Answer: Option ${q.qans}`, fontSize: 13 });
+      content.push({ text: `Hint: ${q.qhint}`, fontSize: 13 });
       content.push({ text: '', margin: [0, 10] }); // Adds a space between questions
     });
 
@@ -198,13 +252,14 @@ function examSummaryReport(){
 
 
  // to save the details in data base... enaable this call
- //setExamResultToDatabase();
+ setExamResultToDatabase();
 
 }
 
 function setExamResultToDatabase(){
   // Retrieve username from localStorage
    studentName = localStorage.getItem('stdntname');
+   phoneno= localStorage.getItem('phoneno');
 
   const firebaseConfig = {
     apiKey: "AIzaSyAdwlJCdrMnKC_Pa4Lrtaq2yct8x3IC-ps",
@@ -225,7 +280,8 @@ const usersRef = database.ref(examName);
 // Example data to be inserted
 const userData = {
   name: studentName,
-  marks: CorrectdCount
+  marks: CorrectdCount,
+  phone: phoneno
 };
 
 // Push data to Firebase Realtime Database under "users" node
@@ -275,7 +331,7 @@ const timerElement = document.getElementById('timer');
 
 document.getElementById('close-btn').addEventListener('click',()=> {
 
-  const userConfirmed = confirm("Are you sure to Close?");
+  const userConfirmed = confirm("Are you sure to Submit the Exam?");
   
   // Check the user's response
   if (userConfirmed) {
@@ -316,8 +372,18 @@ function setAnalysisNextQuestion ()
   if(selectdOptionVal>0){
     radios[selectdOptionVal-1].checked = true;
   }
-  const hintbtn = document.getElementById("hint-btn");
-  hintbtn.innerHTML= loadedData[currentQuestionIndex].qhint;
+
+  for(var i = 0 ; i < radios.length; i++){
+    radios[i].disabled=true;
+  }
+
+  //const hintbtn = document.getElementById("hint-btn");
+ // hintbtn.innerHTML= loadedData[currentQuestionIndex].qhint;
+
+  const tarea = document.getElementById("hintTextArea");
+  tarea.value = loadedData[currentQuestionIndex].qhint;
+  tarea.setAttribute('readonly', 'readonly');
+
 
   const ansbtn = document.getElementById("ans-btn");
   ansbtn.innerHTML="ANSWER - OPTION:"+ loadedData[currentQuestionIndex].qans;
@@ -354,8 +420,12 @@ function setAnalysisData(){
   const anxtbtn = document.getElementById("anxt-btn");
   anxtbtn.style.display = 'none';
   
-  const hintbtn = document.getElementById("hint-btn");
-  hintbtn.style.display = 'inline';
+  //const hintbtn = document.getElementById("hint-btn");
+ // hintbtn.style.display = 'inline';
+
+  
+  const hint1 = document.getElementById("hintTextArea");
+  hint1.style.display = 'inline';
 
   const submtbtn = document.getElementById("submit-btn");
   submtbtn.style.display = 'none';
@@ -375,7 +445,20 @@ function setAnalysisData(){
   if (selectdOptionVal>0){
     radios[selectdOptionVal-1].checked = true;
   }
-  hintbtn.innerHTML= loadedData[currentQuestionIndex].qhint;
+  
+  for(var i = 0 ; i < radios.length; i++){
+    radios[i].disabled=true;
+  }
+
+
+
+  //hintbtn.innerHTML= loadedData[currentQuestionIndex].qhint;
+  const tarea = document.getElementById("hintTextArea");
+  tarea.value = loadedData[currentQuestionIndex].qhint;
+  tarea.setAttribute('readonly', 'readonly');
+
+ // document.getElementById("hintTextArea").value = loadedData[currentQuestionIndex].qhint;
+
 
   ansbtn.innerHTML="ANSWER - OPTION:"+ loadedData[currentQuestionIndex].qans;
     
