@@ -17,9 +17,9 @@
     "qopt2": "Himachal",
     "qopt3": "Orissa",
     "qopt4": "Andhra",
-    "qans": "2",
+    "qans": "4",
     "qhint": "NA",
-    "imgid": "1"
+    "imgid": "4"
   },
   {
     "qid": "3",
@@ -39,7 +39,7 @@
     "qopt2": "Himachal",
     "qopt3": "Orissa",
     "qopt4": "Andhra",
-    "qans": "4",
+    "qans": "2",
     "qhint": "NA",
     "imgid": "1"
   },
@@ -61,7 +61,7 @@
     "qopt2": "Himachal",
     "qopt3": "Orissa",
     "qopt4": "Andhra",
-    "qans": "2",
+    "qans": "4",
     "qhint": "NA",
     "imgid": "1"
   },
@@ -83,7 +83,7 @@
     "qopt2": "Himachal",
     "qopt3": "Orissa",
     "qopt4": "Andhra",
-    "qans": "4",
+    "qans": "2",
     "qhint": "NA",
     "imgid": "1"
   },
