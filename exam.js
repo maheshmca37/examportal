@@ -1,7 +1,7 @@
 //const listE1 = document.querySelector('ul');
 
-let duration = 600;
-let maxQuestions=10;
+let duration = 2400;
+let maxQuestions=40;
 
 let currentQuestionIndex = 0;
 let loadedData = '';
@@ -163,8 +163,8 @@ document.getElementById("anxt-btn").onclick = setAnalysisNextQuestion;
 // Enable and Disable For Telugu and English languages
 
  // document.getElementById("change-lang").onclick = setLanguage;
- const langSel = document.getElementById("change-lang");
- langSel.style.display= 'none';
+  const langSel = document.getElementById("change-lang");
+  langSel.style.display= 'none';
 //document.getElementById("download-pdf").onclick = setDataForDownlaod;
 
 function setLanguage(){
@@ -183,6 +183,7 @@ function setLanguage(){
 }
 
 
+
 document.getElementById("download-pdf").addEventListener("click", function(event) {
     event.preventDefault(); // Prevent the default form submission or link behavior
     const content = [];
@@ -193,6 +194,8 @@ document.getElementById("download-pdf").addEventListener("click", function(event
     const tmarks = "Total Questions :"+maxQuestions;
     let noatt = maxQuestions-(CorrectdCount+WrongCount);
     const notattempt = "Not Attempted : "+noatt;
+    let attmptd = maxQuestions-noatt;
+    const attempt = "Attempted : "+attmptd;
     const resmarks ="Correct : "+CorrectdCount;
     const wrmarks = "Wrong : "+WrongCount;
      
@@ -201,14 +204,32 @@ document.getElementById("download-pdf").addEventListener("click", function(event
     content.push({ text: sname, fontSize: 16, bold: true });
     content.push({ text: tmarks, fontSize: 16, bold: true });
     content.push({ text: notattempt, fontSize: 16, bold: true });
+    content.push({ text: attempt, fontSize: 16, bold: true });
     content.push({ text: resmarks, fontSize: 16, bold: true });
     content.push({ text: wrmarks, fontSize: 16, bold: true });
 
     content.push({ text: '', margin: [0, 15] });
 
+    var dynamicText = "Hi....\n 1.Make sure your INTERNET good connectivity and BATTERY.\n 2.Your FIRST ATTEMPT of exam marks only saved. ";
+    dynamicText = dynamicText+"\n 3. Exam will be CLOSED AUTOMATICALLY once specified duration completed.";
+    dynamicText = dynamicText+"\n 3. Exam will be CLOSED AUTOMATICALLY once specified duration completed.";
+    dynamicText = dynamicText+"\n 3. Exam will be CLOSED AUTOMATICALLY once specified duration completed.";
+    dynamicText = dynamicText+"\n 3. Exam will be CLOSED AUTOMATICALLY once specified duration completed.";
+    dynamicText = dynamicText+"\n 3. Exam will be CLOSED AUTOMATICALLY once specified duration completed.";
+    dynamicText = dynamicText+"\n 3. Exam will be CLOSED AUTOMATICALLY once specified duration completed.";
+    dynamicText = dynamicText+"\n 3. Exam will be CLOSED AUTOMATICALLY once specified duration completed.";
+    dynamicText = dynamicText+"\n 3. Exam will be CLOSED AUTOMATICALLY once specified duration completed.";
+
+   // content.push({ text: dynamicText, fontSize: 12, bold: true });
+
+
+   // content.push({ text: '', margin: [0, 15] });
+
 
     loadedData.forEach((q,index) => {
-      content.push({ text: `Q${q.qid}. ${q.qname}`, fontSize: 13 });
+      const formattedQName = q.qname.replace(/<br\s*\/?>/gi, '\n');
+
+      content.push({ text: `Q${q.qid}. ${formattedQName}`, fontSize: 13 });
       
       content.push({ text: `1. ${q.qopt1}`, fontSize: 12 });
       content.push({ text: `2. ${q.qopt2}`, fontSize: 12 });
@@ -227,7 +248,9 @@ document.getElementById("download-pdf").addEventListener("click", function(event
 
     const docDefinition = { 
       content: content
-    };
+            
+  };
+
 
     pdfMake.createPdf(docDefinition).download('result.pdf');
   });
@@ -249,7 +272,7 @@ function examSummaryReport(){
   const pdfbtn=document.getElementById("download-pdf");
   pdfbtn.style.display='inline';
   
-
+  showSubmitAlert();
 
  // to save the details in data base... enaable this call
  setExamResultToDatabase();
@@ -259,6 +282,7 @@ function examSummaryReport(){
 function setExamResultToDatabase(){
   // Retrieve username from localStorage
    studentName = localStorage.getItem('stdntname');
+   institutename = localStorage.getItem('institutename');
    phoneno= localStorage.getItem('phoneno');
 
   const firebaseConfig = {
@@ -281,6 +305,7 @@ const usersRef = database.ref(examName);
 const userData = {
   name: studentName,
   marks: CorrectdCount,
+  school: institutename,
   phone: phoneno
 };
 
@@ -407,7 +432,29 @@ function setAnalysisNextQuestion ()
    }
 
 
+   // Example of calling the showAlert function
+  // showSubmitAlert();
+
+
 }
+
+// Function to show the alert with Yes/No options
+function showSubmitAlert() {
+  // Use confirm to show a dialog with Yes and No options
+  const userConfirmed = confirm("Your exam has completed..Do u want to downlod response sheet?");
+
+  // Check the user's response
+  if (userConfirmed) {
+    // User clicked "Yes"
+    const pdfbtn = document.getElementById("download-pdf");
+    pdfbtn.click();
+    
+  } else {
+    // User clicked "No"
+  }
+}
+
+
 
 function setAnalysisData(){
   let selectdOptionVal = 0;
