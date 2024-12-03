@@ -4,8 +4,8 @@
         "examid":"NMMS",
         "usr": "m",
         "pwrd": "mah",
-        "maxquestions":"40",
-        "duration": "40"
+        "maxquestions":"30",
+        "duration": "1800"
         
     }
 

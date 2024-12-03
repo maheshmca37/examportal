@@ -1,7 +1,7 @@
 //const listE1 = document.querySelector('ul');
 
-let duration = 2400;
-let maxQuestions=40;
+let duration = 1800;
+let maxQuestions=30;
 
 let currentQuestionIndex = 0;
 let loadedData = '';
