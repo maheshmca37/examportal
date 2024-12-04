@@ -189,7 +189,7 @@ document.getElementById("download-pdf").addEventListener("click", function(event
     const content = [];
     
     
-    const sname =   "Name : "+studentName; 
+    const sname =   "Name : "+localStorage.getItem('stdntname');
     const exname =   "Exam  : "+examName; 
     const tmarks = "Total Questions :"+maxQuestions;
     let noatt = maxQuestions-(CorrectdCount+WrongCount);
