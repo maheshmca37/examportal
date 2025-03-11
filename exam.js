@@ -198,7 +198,7 @@ document.getElementById("download-pdf").addEventListener("click", function(event
     const attempt = "Attempted : "+attmptd;
     const resmarks ="Correct : "+CorrectdCount;
     const wrmarks = "Wrong : "+WrongCount;
-     
+    const examresult = "Note : Exam Reult/Ranks of all students will be provided tomorrow" ;
     
     content.push({ text: exname, fontSize: 16, bold: true });
     content.push({ text: sname, fontSize: 16, bold: true });
@@ -207,6 +207,7 @@ document.getElementById("download-pdf").addEventListener("click", function(event
     content.push({ text: attempt, fontSize: 16, bold: true });
     content.push({ text: resmarks, fontSize: 16, bold: true });
     content.push({ text: wrmarks, fontSize: 16, bold: true });
+    content.push({ text: examresult, fontSize: 16, bold: true });
 
     content.push({ text: '', margin: [0, 15] });
 
