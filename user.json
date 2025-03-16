@@ -1,11 +1,11 @@
 [
 
     {
-        "examid":"NMMS",
+        "examid":"POLYCET",
         "usr": "m",
         "pwrd": "mah",
-        "maxquestions":"30",
-        "duration": "1800"
+        "maxquestions":"25",
+        "duration": "1500"
         
     }
 

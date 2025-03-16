@@ -1,7 +1,7 @@
 //const listE1 = document.querySelector('ul');
 
-let duration = 1800;
-let maxQuestions=30;
+let duration = 1500;
+let maxQuestions=25;
 
 let currentQuestionIndex = 0;
 let loadedData = '';
@@ -125,9 +125,27 @@ function startExam(loadedData){
     showQuestion();
 }
 
+
+function setImageByID(qimgid){
+  const img = document.getElementById('qimg');
+  if(qimgid>0){
+    
+    const imgpath = "./"+qimgid+".jpg";
+    img.src = imgpath; // Adjust the path accordingly
+    img.style.display ='block';
+    
+  }
+  else{
+    img.style.display='none';
+  }
+}
+
+
 function showQuestion() {
 
   if(selectedLanguage == 1){
+     const imid = loadedData[currentQuestionIndex].imgid;
+     setImageByID(imid) ;      
 
     currentQtnNo = loadedData[currentQuestionIndex].qid;
     questionElement.innerHTML = currentQtnNo + ".  " +loadedData[currentQuestionIndex].qname;
@@ -185,8 +203,8 @@ function setLanguage(){
 
 
 document.getElementById("download-pdf").addEventListener("click", function(event) {
-    event.preventDefault(); // Prevent the default form submission or link behavior
-    const content = [];
+  event.preventDefault(); // Prevent the default form submission or link behavior
+    let content = [];
     
     
     const sname =   "Name : "+localStorage.getItem('stdntname');
@@ -200,61 +218,119 @@ document.getElementById("download-pdf").addEventListener("click", function(event
     const wrmarks = "Wrong : "+WrongCount;
     const examresult = "Note : Exam Reult/Ranks of all students will be provided tomorrow" ;
     
-    content.push({ text: exname, fontSize: 16, bold: true });
-    content.push({ text: sname, fontSize: 16, bold: true });
-    content.push({ text: tmarks, fontSize: 16, bold: true });
-    content.push({ text: notattempt, fontSize: 16, bold: true });
-    content.push({ text: attempt, fontSize: 16, bold: true });
-    content.push({ text: resmarks, fontSize: 16, bold: true });
-    content.push({ text: wrmarks, fontSize: 16, bold: true });
-    content.push({ text: examresult, fontSize: 16, bold: true });
-
-    content.push({ text: '', margin: [0, 15] });
-
-    var dynamicText = "Hi....\n 1.Make sure your INTERNET good connectivity and BATTERY.\n 2.Your FIRST ATTEMPT of exam marks only saved. ";
-    dynamicText = dynamicText+"\n 3. Exam will be CLOSED AUTOMATICALLY once specified duration completed.";
-    dynamicText = dynamicText+"\n 3. Exam will be CLOSED AUTOMATICALLY once specified duration completed.";
-    dynamicText = dynamicText+"\n 3. Exam will be CLOSED AUTOMATICALLY once specified duration completed.";
-    dynamicText = dynamicText+"\n 3. Exam will be CLOSED AUTOMATICALLY once specified duration completed.";
-    dynamicText = dynamicText+"\n 3. Exam will be CLOSED AUTOMATICALLY once specified duration completed.";
-    dynamicText = dynamicText+"\n 3. Exam will be CLOSED AUTOMATICALLY once specified duration completed.";
-    dynamicText = dynamicText+"\n 3. Exam will be CLOSED AUTOMATICALLY once specified duration completed.";
-    dynamicText = dynamicText+"\n 3. Exam will be CLOSED AUTOMATICALLY once specified duration completed.";
-
-   // content.push({ text: dynamicText, fontSize: 12, bold: true });
+    
+  content += `<h2>${exname}</h2>`;
+  content += `<p><strong>${sname}</strong></p>`;
+  content += `<p>${tmarks}</p>`;
+  content += `<p>${notattempt}</p>`;
+  content += `<p>${attempt}</p>`;
+  content += `<p>${resmarks}</p>`;
+  content += `<p>${wrmarks}</p>`;
+  content += `<p>${examresult}</p>`;
+  content += '<br><br>';
 
 
-   // content.push({ text: '', margin: [0, 15] });
 
+  let imagesLoaded = 0;  // Counter for how many images have been processed
+  const totalImages = loadedData.filter(q => q.imgid > 0).length;  // Total number of images to process
 
-    loadedData.forEach((q,index) => {
-      const formattedQName = q.qname.replace(/<br\s*\/?>/gi, '\n');
+  // Function to convert image to base64
+  function getBase64Image(imgElement, callback) {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.height = imgElement.naturalHeight;
+    canvas.width = imgElement.naturalWidth;
+    ctx.drawImage(imgElement, 0, 0);
+    callback(canvas.toDataURL("image/jpg")); // Or use the correct mime type
+  }
 
-      content.push({ text: `Q${q.qid}. ${formattedQName}`, fontSize: 13 });
+  // Loop through all questions and process images
+  loadedData.forEach((q, index) => {
+    const formattedQName = q.qname.replace(/<br\s*\/?>/gi, '\n');
+    
+    content += `<div id="question_${q.qid}">`;
+
+    // If the question has an image, load and display it first
+    if (q.imgid > 0) {
+      const imgpath = `${q.imgid}.jpg`;  // Assuming image is available via this path
+      const imgElement = new Image();
+      imgElement.src = imgpath;
+
+      imgElement.onload = function() {
+        // Convert the image to base64 and insert it into the content
+        getBase64Image(imgElement, function(base64Image) {
+          // Add image first
+          content += `<img id="qimg_${q.qid}" src="${base64Image}" style="display:block;" />`;
+          
+          // Add the question text next
+          content += `<h3>Q${q.qid}. ${formattedQName}</h3>`;
+          
+          // Add the options
+          content += `<ul>`;
+          content += `<li>1. ${q.qopt1}</li>`;
+          content += `<li>2. ${q.qopt2}</li>`;
+          content += `<li>3. ${q.qopt3}</li>`;
+          content += `<li>4. ${q.qopt4}</li>`;
+
+          const userSelection = selectedOptions[q.qid]; // Ensure correct mapping for selected options
+          content += `<li>Your Selection: Option ${userSelection}</li>`;
+
+          content += `<li>Answer: Option ${q.qans}</li>`;
+          content += `<li>Hint: ${q.qhint}</li>`;
+          content += `</ul>`;
+
+          content += `</div><br><br>`;
+
+          // Increment the counter for loaded images
+          imagesLoaded++;
+
+          // If all images are loaded, create and download the HTML file
+          if (imagesLoaded === totalImages) {
+            downloadHTML(content);
+          }
+        });
+      };
+    } else {
+      // If no image for this question, just add the content
+      content += `<h3>Q${q.qid}. ${formattedQName}</h3>`;
+      content += `<ul>`;
+      content += `<li>1. ${q.qopt1}</li>`;
+      content += `<li>2. ${q.qopt2}</li>`;
+      content += `<li>3. ${q.qopt3}</li>`;
+      content += `<li>4. ${q.qopt4}</li>`;
       
-      content.push({ text: `1. ${q.qopt1}`, fontSize: 12 });
-      content.push({ text: `2. ${q.qopt2}`, fontSize: 12 });
-      content.push({ text: `3. ${q.qopt3}`, fontSize: 12 });
-      content.push({ text: `4. ${q.qopt4}`, fontSize: 12 });
+      const userSelection = selectedOptions[q.qid];
+      content += `<li>Your Selection: Option ${userSelection}</li>`;
+      
+      content += `<li>Answer: Option ${q.qans}</li>`;
+      content += `<li>Hint: ${q.qhint}</li>`;
+      content += `</ul>`;
 
-      // Add user selection after options
-        const userSelection = selectedOptions[index+1]; // Get the user selection for the current question
-        content.push({ text: `Your: Option ${userSelection}`, fontSize: 12 });
-        
-
-      content.push({ text: `Answer: Option ${q.qans}`, fontSize: 13 });
-      content.push({ text: `Hint: ${q.qhint}`, fontSize: 13 });
-      content.push({ text: '', margin: [0, 10] }); // Adds a space between questions
-    });
-
-    const docDefinition = { 
-      content: content
-            
-  };
-
-
-    pdfMake.createPdf(docDefinition).download('result.pdf');
+      content += `</div><br><br>`;
+    }
   });
+
+  // Function to download the HTML file after all content has been processed
+  function downloadHTML(content) {
+    // Create a Blob from the content string
+    const blob = new Blob([content], { type: 'text/html' });
+
+    // Create a link element to trigger the download
+    const a = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    a.href = url;
+    a.download = 'result.html'; // Specify the download file name
+    document.body.appendChild(a);
+  
+    // Trigger the click event to download the file
+    a.click();
+
+    // Clean up by revoking the object URL and removing the link element
+    URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  }
+});
+
 
 function examSummaryReport(){
   let notAttempterd="";
