@@ -1,7 +1,7 @@
 //const listE1 = document.querySelector('ul');
 
-let duration = 1500;
-let maxQuestions=25;
+let duration = 3900;
+let maxQuestions=60;
 
 let currentQuestionIndex = 0;
 let loadedData = '';
@@ -204,21 +204,20 @@ function setLanguage(){
 
 document.getElementById("download-pdf").addEventListener("click", function(event) {
   event.preventDefault(); // Prevent the default form submission or link behavior
-    let content = [];
-    
-    
-    const sname =   "Name : "+localStorage.getItem('stdntname');
-    const exname =   "Exam  : "+examName; 
-    const tmarks = "Total Questions :"+maxQuestions;
-    let noatt = maxQuestions-(CorrectdCount+WrongCount);
-    const notattempt = "Not Attempted : "+noatt;
-    let attmptd = maxQuestions-noatt;
-    const attempt = "Attempted : "+attmptd;
-    const resmarks ="Correct : "+CorrectdCount;
-    const wrmarks = "Wrong : "+WrongCount;
-    const examresult = "Note : Exam Reult/Ranks of all students will be provided tomorrow" ;
-    
-    
+  let content = [];
+
+  // Add basic information like student name, exam name, total questions, etc.
+  const sname = "Name : " + localStorage.getItem('stdntname');
+  const exname = "Exam  : " + examName;
+  const tmarks = "Total Questions :" + maxQuestions;
+  let noatt = maxQuestions - (CorrectdCount + WrongCount);
+  const notattempt = "Not Attempted : " + noatt;
+  let attmptd = maxQuestions - noatt;
+  const attempt = "Attempted : " + attmptd;
+  const resmarks = "Correct : " + CorrectdCount;
+  const wrmarks = "Wrong : " + WrongCount;
+  const examresult = "Note : Exam Result/State Ranks of all students will be provided tomorrow";
+
   content += `<h2>${exname}</h2>`;
   content += `<p><strong>${sname}</strong></p>`;
   content += `<p>${tmarks}</p>`;
@@ -229,86 +228,78 @@ document.getElementById("download-pdf").addEventListener("click", function(event
   content += `<p>${examresult}</p>`;
   content += '<br><br>';
 
-
-
-  let imagesLoaded = 0;  // Counter for how many images have been processed
-  const totalImages = loadedData.filter(q => q.imgid > 0).length;  // Total number of images to process
+  // Sort the loadedData based on qid (question id) to ensure the correct order
+  loadedData.sort((a, b) => a.qid - b.qid);
 
   // Function to convert image to base64
-  function getBase64Image(imgElement, callback) {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    canvas.height = imgElement.naturalHeight;
-    canvas.width = imgElement.naturalWidth;
-    ctx.drawImage(imgElement, 0, 0);
-    callback(canvas.toDataURL("image/jpg")); // Or use the correct mime type
+  function getBase64Image(imgElement) {
+    return new Promise((resolve) => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.height = imgElement.naturalHeight;
+      canvas.width = imgElement.naturalWidth;
+      ctx.drawImage(imgElement, 0, 0);
+      resolve(canvas.toDataURL("image/jpg"));
+    });
   }
 
-  // Loop through all questions and process images
-  loadedData.forEach((q, index) => {
+  // Function to add question HTML content (with or without image)
+  function addQuestionHTML(q, base64Image = '') {
     const formattedQName = q.qname.replace(/<br\s*\/?>/gi, '\n');
-    
     content += `<div id="question_${q.qid}">`;
 
-    // If the question has an image, load and display it first
-    if (q.imgid > 0) {
-      const imgpath = `${q.imgid}.jpg`;  // Assuming image is available via this path
-      const imgElement = new Image();
-      imgElement.src = imgpath;
-
-      imgElement.onload = function() {
-        // Convert the image to base64 and insert it into the content
-        getBase64Image(imgElement, function(base64Image) {
-          // Add image first
-          content += `<img id="qimg_${q.qid}" src="${base64Image}" style="display:block;" />`;
-          
-          // Add the question text next
-          content += `<h3>Q${q.qid}. ${formattedQName}</h3>`;
-          
-          // Add the options
-          content += `<ul>`;
-          content += `<li>1. ${q.qopt1}</li>`;
-          content += `<li>2. ${q.qopt2}</li>`;
-          content += `<li>3. ${q.qopt3}</li>`;
-          content += `<li>4. ${q.qopt4}</li>`;
-
-          const userSelection = selectedOptions[q.qid]; // Ensure correct mapping for selected options
-          content += `<li>Your Selection: Option ${userSelection}</li>`;
-
-          content += `<li>Answer: Option ${q.qans}</li>`;
-          content += `<li>Hint: ${q.qhint}</li>`;
-          content += `</ul>`;
-
-          content += `</div><br><br>`;
-
-          // Increment the counter for loaded images
-          imagesLoaded++;
-
-          // If all images are loaded, create and download the HTML file
-          if (imagesLoaded === totalImages) {
-            downloadHTML(content);
-          }
-        });
-      };
-    } else {
-      // If no image for this question, just add the content
-      content += `<h3>Q${q.qid}. ${formattedQName}</h3>`;
-      content += `<ul>`;
-      content += `<li>1. ${q.qopt1}</li>`;
-      content += `<li>2. ${q.qopt2}</li>`;
-      content += `<li>3. ${q.qopt3}</li>`;
-      content += `<li>4. ${q.qopt4}</li>`;
-      
-      const userSelection = selectedOptions[q.qid];
-      content += `<li>Your Selection: Option ${userSelection}</li>`;
-      
-      content += `<li>Answer: Option ${q.qans}</li>`;
-      content += `<li>Hint: ${q.qhint}</li>`;
-      content += `</ul>`;
-
-      content += `</div><br><br>`;
+    if (base64Image) {
+      content += `<img id="qimg_${q.qid}" src="${base64Image}" style="display:block;" />`;
     }
-  });
+
+    content += `<h3>Q${q.qid}. ${formattedQName}</h3>`;
+    content += `<ul>`;
+    content += `<li>1. ${q.qopt1}</li>`;
+    content += `<li>2. ${q.qopt2}</li>`;
+    content += `<li>3. ${q.qopt3}</li>`;
+    content += `<li>4. ${q.qopt4}</li>`;
+
+    const userSelection = selectedOptions[q.qid];
+    content += `<li>Your Selection: Option ${userSelection}</li>`;
+    content += `<li>Answer: Option ${q.qans}</li>`;
+    if (q.qhint.length > 3) {
+      content += `<li>Hint: ${q.qhint.replace(/\n/g, '<br>')}</li>`;
+    } else {
+      content += `<li>Hint: ${q.qhint}</li>`;  // If it's 3 characters or less, just display as is.
+    }
+    
+    content += `</ul>`;
+    content += `</div><br><br>`;
+  }
+
+  // This function will process each question in sequence (keeping the order intact)
+  async function processQuestions() {
+    for (let q of loadedData) {
+      if (q.imgid > 0) {
+        // If the question has an image, we need to load it
+        const imgElement = new Image();
+        imgElement.src = `${q.imgid}.jpg`;
+
+        // Wait for image to load before adding it to HTML
+        await new Promise((resolve) => {
+          imgElement.onload = async function() {
+            const base64Image = await getBase64Image(imgElement);
+            addQuestionHTML(q, base64Image);  // Add question HTML with image
+            resolve();  // Resolve the promise once the image is loaded and HTML is added
+          };
+        });
+      } else {
+        // If no image for this question, just add question content
+        addQuestionHTML(q);
+      }
+    }
+
+    // After all questions are processed, initiate the download
+    downloadHTML(content);
+  }
+
+  // Start processing questions
+  processQuestions();
 
   // Function to download the HTML file after all content has been processed
   function downloadHTML(content) {
@@ -321,7 +312,7 @@ document.getElementById("download-pdf").addEventListener("click", function(event
     a.href = url;
     a.download = 'result.html'; // Specify the download file name
     document.body.appendChild(a);
-  
+
     // Trigger the click event to download the file
     a.click();
 
@@ -617,7 +608,7 @@ function setAnalysis(){
   const closebtn = document.getElementById("close-btn");
     closebtn.style.display = 'none';
 
-  timerElement.textContent = '00:00:00';
+  timerElement.textContent = 'Time: 0:0:0';
 
   
   const form1=document.getElementById('radio-btns');
@@ -769,7 +760,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
       if (countdownTime <= 0) {
           clearInterval(timerInterval);
-          timerElement.textContent = '00:00:00';
+          timerElement.textContent = 'Time: 0:0:0';
           onTimerEnd();
           return;
       }
@@ -780,7 +771,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const secs = countdownTime % 60;
 
       timerElement.textContent = 
-          `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+          `Remaining : ${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   }
 
   function onTimerEnd() {
