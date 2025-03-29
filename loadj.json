@@ -20,18 +20,18 @@
   "qopt3": "a = 2, b = -6",
   "qopt4": "a = 0, b = -6",
   "qans": "4",
-  "qhint": "1. Sum of the roots:\n     2+(-3)=-(a+1)\n             -1=-(a+1)\n          a+1=1\n             a=0\n2. Product of the roots:\n       2×(-3)=b \n            b=-6",
+  "qhint": "1. Sum of the roots:\n     2+(-3)=-(a+1)\n             -1=-(a+1)\n          a+1=1\n             a=0\n2. Product of the roots:\n       2 x (-3)=b \n            b=-6",
   "imgid": "0"
 },
 {
   "qid": "3",
   "qname": "Dividend is equal to",
-  "qopt1": "divisor × quotient + remainder",
-  "qopt2": "divisior × quotient",
-  "qopt3": "divisior × quotient – remainder",
-  "qopt4": "divisor × quotient × remainder",
+  "qopt1": "divisor  X quotient + remainder",
+  "qopt2": "divisior X quotient",
+  "qopt3": "divisior X quotient - remainder",
+  "qopt4": "divisor X quotient - remainder",
   "qans": "1",
-  "qhint": "Divsor×quotient+remainder  \n Formulate remaining also once..!",
+  "qhint": "Divsor X quotient+remainder  \n Formulate remaining also once..!",
   "imgid": "0"
 },
  {
@@ -86,7 +86,7 @@
   "qopt3": "-2, 2, -2, 2, -2 ...",
   "qopt4": "None",
   "qans": "3",
-  "qhint": "Na",
+  "qhint": "In an AP,the difference between consecutive terms is constant.\n For option 3:\n    2-(-2)=4,-2-2=-4,2-(-2)=4\n The difference alternates between 4 and -4,\n So it's not a constant difference,",
   "imgid": "0"
 },
 {
@@ -97,18 +97,18 @@
   "qopt3": "13",
   "qopt4": "5",
   "qans": "1",
-  "qhint": "Na",
+  "qhint": "Pythagorean theorem:\n         a^2+b^2=c^2\n Where c=17 (the largest number) and a=15( one of the smallest number)\n    15^2+b^2=17^2\n    225+b^2=289\n            b^2=64\n               b =8",
   "imgid": "0"
 },
  {
   "qid": "10",
-  "qname": "In Δ ABC, AB = 5 cm, AC = 7 cm. If AD is the angle bisector of ∠A. Then BD : CD is:",
+  "qname": "In traingle ABC, AB = 5 cm, AC = 7 cm. If AD is the angle bisector of angle A. Then BD : CD is:",
   "qopt1": "25 : 49",
   "qopt2": "49 : 25",
   "qopt3": "6 : 1",
   "qopt4": "5 : 7",
   "qans": "4",
-  "qhint": "Na",
+  "qhint": "the angle bisector theorem states that the angle bisector divides the opposite side(BC) into segments that are proportional to the adjacent sides,\n BD/CD=AB/AC\n BD/CD=5/7",
   "imgid": "0"
 },
 {
@@ -118,30 +118,30 @@
   "qopt2": "2",
   "qopt3": "1",
   "qopt4": "-1",
-  "qans": "Ans",
-  "qhint": "NA",
+  "qans": "4",
+  "qhint": "Let A(-5, 1), B(1, p), C(4, -2) are given Points \n Find the lengths of AB, BC and CA  \n Given  3 points are collinear, \n So AB + BC = AC  \n Note : try slopes concept also if you know",
   "imgid": "0"
 },
 {
   "qid": "12",
-  "qname": "  The graph of a quadratic equation is a —————",
+  "qname": " The graph of a quadratic equation is a :",
   "qopt1": "Parabola",
   "qopt2": "Circle",
   "qopt3": "Straight line",
   "qopt4": "none of these",
   "qans": "1",
-  "qhint": "NA",
+  "qhint": "The graph of a quadratic equation is always a parabola",
   "imgid": "0"
 },
 {
   "qid": "13",
-  "qname": "If sin A = cos A and the value of A lies between 0 and 90, then A = ———-",
+  "qname": "If sin A = cos A and the value of A lies between 0 and 90, then A = ",
   "qopt1": "0",
   "qopt2": "45",
   "qopt3": "90",
   "qopt4": "30",
   "qans": "2",
-  "qhint": "Na",
+  "qhint": "Values of A between 0° and 90°, the sin and cos functions are equal when A=45°",
   "imgid": "0"
 },
 {
@@ -152,7 +152,7 @@
   "qopt3": "increasing",
   "qopt4": "none of these",
   "qans": "2",
-  "qhint": "NA",
+  "qhint": "The length of the shadow of an object (like a tower) increases as \n  the angle of elevation of the sun decreases. \n when the sun is lower in the sky, \n the shadow becomes longer. \n Conversely,when the sun is higher in the sky, the shadow becomes longer. \n Therfore, as the length of shadow increases, \n the angle of elevation of the sun is decreasing.",
   "imgid": "0"
 },
 {
@@ -163,7 +163,7 @@
   "qopt3": "40m",
   "qopt4": "90m",
   "qans": "2",
-  "qhint": "NA",
+  "qhint": "We need to find the length of the string,which is the hypotenuse of a right angle traingle. \n  opposite side(height)\n  The hypotenuse (length of the string) \n We can use sin function\n     Sin(angle)= opposite side/hypotenuse \n  Sin30°=60/hypotenuse \n 0.5=60/hypotenuse \n Hypotenuse=120m",
   "imgid": "0"
 },
 {
@@ -173,19 +173,19 @@
   "qopt2": "65 cm²",
   "qopt3": "30 cm²",
   "qopt4": "32.5 cm²",
-  "qans": "NA",
-  "qhint": "NA",
+  "qans": "1",
+  "qhint": "Given  OP=13, OR=OQ=5\n  using Pythagoreas theorem find the length of tangents.\n In triangle OPQ, OP^2=OQ^2+PQ^2\n   PQ=12CM\n  The quadrilateral PQOR can divided into two triangles ∆OPQ and ∆OPR.\n  area of ∆OPQ=(1/2)×OQ×PQ\n      = 30sq.cm\n ∆OPQ and ∆OPR are congruent,\n the total area of the quadrilateral PQOR is:\n  area of PQOR=30+30\n =60sq.cm",
   "imgid": "0"
 },
  {
   "qid": "17",
-  "qname": "The lengths of tangents drawn from an external point to a circle are ———",
+  "qname": "The lengths of tangents drawn from an external point to a circle are :",
   "qopt1": "Equal",
   "qopt2": "Greater",
   "qopt3": "Smaller",
   "qopt4": "None",
   "qans": "1",
-  "qhint": "NA",
+  "qhint": "The lengths of tangents drawn from an external point to a circle are always equal..  \n Note : Study the all properties of tangents",
   "imgid": "0"
 },
 {
@@ -196,7 +196,7 @@
   "qopt3": "1980 m",
   "qopt4": "1596 m",
   "qans": "3",
-  "qhint": "NA",
+  "qhint": "(Distance traveled in one revolution)\n Formula of circumference C of a circleis:\n      C=π X diameter\n     C= π X 1.26\n       = 3.96meters\n 500 revolutions= 500 X 3.96\n                              =1980meters",
   "imgid": "0"
 },
  {
@@ -207,7 +207,7 @@
   "qopt3": "8 units",
   "qopt4": "2 units",
   "qans": "3",
-  "qhint": "NA",
+  "qhint": "Area of a circle(A)=πr^2\n Circumference of a circle(C)=2πr\n We are told the area is numerically equal to twice the circumference,so:\n πr^2=2 * (2πr)\n πr^2=4πr\n (Both side divided πr)\n r=4\n The diameter d of a circle is twice the radius:\n d=2r=2 * 4=8units",
   "imgid": "0"
 },
 {
@@ -218,7 +218,7 @@
   "qopt3": "3:2",
   "qopt4": "None",
   "qans": "1",
-  "qhint": "Na",
+  "qhint": "The surface of the sphere:  A(sphere)=4πr^2\n Surface area of the cube: A(cube)= 6a^2\n Volume of the sphere: V1=(4/3)πr^3\n Volume of the cube: V2=a^3\n Equating the surface area:  4πr^2=6a^2\n      πr^2=1.5a^2\n      r^2=(1.5a^2)/π\n      r=a√(1.5/π)\n Ratio of the volumesV1:V2  V1:V2={(4/3)πr^3}/a^3\n Substitute r value\n   V1:V2=4/3(1.5/π)^3/2\n After simplifying the powers and constants,\n The ratio comes out to be 3:2",
   "imgid": "0"
 },
   {
@@ -229,7 +229,7 @@
   "qopt3": "20 cm",
   "qopt4": "25 cm",
   "qans": "1",
-  "qhint": "Na",
+  "qhint": "Original cube volume =edge^3  I,E (12)^3 = 1728cm^3\n First small cube volume V1=6^3=216cm^3\n Second small cube volume V2=8^3=512cm^3\n Find the volume of third cube:\n V original=V1+V2+V3\n 1728=216+512+V3 \n V3=1000cm^3\n Find the edge of third cube:\n V3=edge^3\n Edge^3= 1000\n Edge=10",
   "imgid": "0"
 },
  {
@@ -240,7 +240,7 @@
   "qopt3": "3 cm",
   "qopt4": "2 cm",
   "qans": "1",
-  "qhint": "Na",
+  "qhint": "Curved surface area of a cylinder: CSA=2πrh\n 88=2πr(14)\n r=88/28π\n r=88/(28×3.14)\n r=1\n Diameter= 2r  => 2*1=2",
   "imgid": "0"
 },
  {
@@ -251,7 +251,7 @@
   "qopt3": "72",
   "qopt4": "none of these ",
   "qans": "1",
-  "qhint": "Na",
+  "qhint": "Mode=L+{(f1-f0)/(2f1-f0-f2)}*h\n =40+ (4/15)*15\n  = 40+4.29\n    =44.29\n But no options provided ",
   "imgid": "0"
 },
 {
@@ -262,18 +262,18 @@
   "qopt3": "29",
   "qopt4": "40",
   "qans": "4",
-  "qhint": "Na",
+  "qhint": "Arrange the data ascending order:\n The median will be middle value,which is the 5 value in the list\n Median 40",
   "imgid": "0"
 },
 {
   "qid": "25",
-  "qname": "One card is drawn from a well shuffled deck of 52 cards; The probability that the card will be an ace is ———— and not an ace is ————  ?",
+  "qname": "One card is drawn from a well shuffled deck of 52 cards; The probability that the card will be an ace is :? and not an ace is : ?",
   "qopt1": "1/13, 12/13",
   "qopt2": "12/13, 1/13",
   "qopt3": "4/13, 9/13",
   "qopt4": "1/13, 1",
   "qans": "1",
-  "qhint": "Na",
+  "qhint": "A standard deck of 52 cards contains 4 aces\n  The probability of drawing and ace is the number of aces divided by the total number of cards inthe deck i.e, 4/52=1/13\n  The probability of not drawing and ace\n 52-4=48\n The probability of not drawing ace is 48/52=12/13",
   "imgid": "0"
 },
 
