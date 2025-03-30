@@ -56,7 +56,7 @@ body {
     white-space: nowrap; /* Prevents line breaks */
     overflow: hidden;
     box-sizing: border-box;
-    animation: scroll 25s linear infinite; /* Scroll animation */
+    animation: scroll 5s linear infinite; /* Scroll animation */
     width: 100%; /* Full width */
     text-align: center; /* Center text */
     position: absolute; /* Positioning below the form */
