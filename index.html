@@ -1,53 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Validation</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>STORE MANAGEMENT SYSTEM</title>
+  <style>
+    /* Reset default margin & padding */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #ece9e6, #ffffff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-bottom: 40px;
+      color: #333;
+      font-size: 32px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      width: 260px;
+      margin: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    button:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    div {
+      text-align: center;
+    }
+  </style>
 </head>
+
 <body>
+  <h2>Store Management System</h2>
 
-    <div class="container">
-        <h2>Enter Details</h2>
-        <form id="validationForm">
-            <div class="form-group">
-                <label for="phone">Phone Number:</label>
-                <input type="text" id="phone" name="phone" maxlength="10" required>
-                <span id="phoneError" class="error-message"></span>
-            </div>
+  <div>
+    <button id="Config" onclick="configLoad()">Configure Store Items</button>
+  </div>
 
-            <div class="form-group">
-                <label for="district">Select District:</label>
-                <select id="district" name="district" required>
-                    <option value="district1">VIZIANAGARAM</option>
-                    <option value="district2">VISHAKHAPATNAM</option>
-                    <option value="district3">SRIKAKULAM</option>
-                    <option value="district4">EAST GODAVARI</option>
-                    <option value="district5">WEST GODAVARI</option>
-                    <option value="district6">KRISHNA</option>
-                    <option value="district7">GUNTUR</option>
-                    <option value="district8">PRAKASAM</option>
-                    <option value="district9">NELLORE</option>
-                    <option value="district10">CHITTOR</option>
-                    <option value="district11">KADAPA</option>
-                    <option value="district12">KURNOOL</option>
-                    <option value="district13">ANANTHAPUR</option>
-                </select>
-                <span id="districtError" class="error-message"></span>
-            </div>
+  <div>
+    <button id="Add" onclick="AddItems()">Add Items to Store</button>
+  </div>
 
-            <button type="submit" id="submitBtn">Submit</button>
+  <div>
+    <button id="Sold" onclick="RemoveItems()">Remove Sold Items</button>
+  </div>
 
-             <!-- Footer Section -->
-        <div class="footer">
-           <br> <br> <marquee class="moving-text">Contact 9492511304 for more details..!</marquee>
-        </div>
+  <div>
+    <button id="Reports" onclick="AdminReports()">Admin Reports</button>
+  </div>
 
+  <div>
+    <button id="Close" onclick="CloseApplication()">Close</button>
+  </div>
 
-        </form>
-    </div>
+  <script>
+    function configLoad() {
+      window.location.href = 'configLoad.html';
+    }
 
-    <script src="script.js"></script>
+    function AddItems() {
+      window.location.href = 'AddItems.html';
+    }
+
+    function RemoveItems() {
+      window.location.href = 'RemoveItems.html';
+    }
+
+    function AdminReports() {
+      window.location.href = 'AdminReports.html';
+    }
+
+    function CloseApplication() {
+      window.close(); // Corrected function to close window
+    }
+  </script>
 </body>
 </html>
